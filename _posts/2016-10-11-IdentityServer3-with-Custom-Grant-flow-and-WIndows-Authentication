@@ -1,0 +1,11 @@
+---
+layout: post
+title: IdentityServer3 with Custom Grant flow and WIndows Authentication
+---
+
+What we are going to create?do
+
+1. Configure IdentityServer3
+2. Create client for `IdntSrv` with `Flows.Other` and AllowedCustomGrant `windows`
+3. Configure WindowsAuthentication Service with enabled WindowsAuthentication to convert windows identity to jwt
+4. Create custom grant validator to validate tokens converted from WindowsAuthentication
