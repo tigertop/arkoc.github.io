@@ -32,17 +32,33 @@ After this we need to install IdentityServer3 with this command:
 Afther that we need our `Startup.cs` to configure our web app and `IdentityServer3`.
 Right Click On Project > Add > OWIN Startup Class.
 
-I will not go deeper for configuring IdentityServer3 basics. You can read about that in documentation pagexx
-Also you can get full source code from this sample ( i will post github link in end of the post )
+I will not go deeper for configuring IdentityServer3 basics. Read more about basics of configuring IdentityServer3 in
+[official documentation](https://identityserver.github.io/Documentation/docsv2/configuration/overview.html)
 
-We should define our Client with `Flows.Custom` and `AllowedCustomGrantTypes: "windows"`. 
+We should define our Client with `Flows.Custom` and `AllowedCustomGrantTypes: "windows"`. Read more about configuring Clients
+in [official documentation](https://identityserver.github.io/Documentation/docsv2/configuration/clients.html)
+
 ![Custom Flow and AllowedCustomGrantTypes "windows"](http://i.imgur.com/EbpLjxy.png)
 
 
 Also In my case all my users should come from windows authentication for that you should disable local login.
+
 ![Disable local login](http://i.imgur.com/mSirFpM.png)
 
-Af
+Now the most important part is to teach our IdentityServer to understand "windows" grant type (:
+
+For that we need to implement `ICustomGrantValidator` interface. Read more about Custom Grant Validators
+in [official documentation](https://identityserver.github.io/Documentation/docsv2/advanced/customGrantTypes.html)
+
+We should define what we need when we are going to grant access with "windows" grant type. We need our `win_token` that
+our `WindowsAuthenticationService` issued.
+
+![Getting win_token from request](http://i.imgur.com/wpNTRMb.png)
+
+After that we need to validate that token in `win_token` field is issued with our `WindowsAuthenticationService`. (You can find full source code repo in end of this post)
+
+![Valdiation Token](http://i.imgur.com/VcTNGU4.png)
+
 
 
 
