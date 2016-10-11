@@ -38,6 +38,7 @@ Right Click On Project > Add > OWIN Startup Class.
 
 Don't forget to Enable SSL fom Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
 
+
 ### 2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
 
 I will not go deeper for configuring IdentityServer3 basics. Read more about basics of configuring IdentityServer3 in
@@ -52,6 +53,7 @@ in [official documentation](https://identityserver.github.io/Documentation/docsv
 Also In my case all my users should come from windows authentication for that you should disable local login.
 
 ![Disable local login](http://i.imgur.com/mSirFpM.png)
+
 
 ### 3. Create and configure `WindowsAuthenticationService` with enabled WindowsAuthentication to convert windows identity to `jwt` token
 
@@ -82,6 +84,7 @@ Note to higlighthing lines. You should Load same Certificate as in IdentityServe
 be able to get converted token by Requesting custom grant from `WinAuthService`.
 
 Don't forget to Enable SSL fom Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
+
 
 ### 4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
 
