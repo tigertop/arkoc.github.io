@@ -29,6 +29,10 @@ After this we need to install IdentityServer3 with this command:
 
 `Install-Package IdentityServer3`
 
+Also we need `System.IdentityModel.Tokens.Jwt` to validate tokens in IdentityServer side.
+
+`Install-Package System.IdentityModel.Tokens.Jwt`
+
 Afther that we need our `Startup.cs` to configure our web app and `IdentityServer3`.
 Right Click On Project > Add > OWIN Startup Class.
 
@@ -58,17 +62,21 @@ Then we need `WindowsAuthentication` Nuget for converting `win_identity` into `j
 `Install-Package IdentityServer.WindowsAuthentication`
 
 Now we need to configure our application to use Windows Autehntication. 
-For IIS Express ( F4 Properties Menu )
+
+For IIS Express ( F4 properties menu )
 
 ![IIS Express](http://i.imgur.com/FjcfTOr.png)
+
 
 For IIS ( uncomment this line in web.config )
 
 ![IIS](http://i.imgur.com/L2QV1CJ.png)
 
+
 Now we should configure `IdentityServer.WindowsAuthentication`. Here it is:
 
 ![WinAuth configuration](http://i.imgur.com/aB7HJm6.png)
+
 
 Note to higlighthing lines. You should Load same Certificate as in IdentityServer, and you should enable OAuth Endpoint to 
 be able to get converted token by Requesting custom grant from `WinAuthService`.
@@ -86,14 +94,26 @@ We should define what we need when we are going to grant access with "windows" g
 our `WindowsAuthenticationService` issued. This service can be used with `IdentityServer3` for WS-Federation, but we aren't going to
 use it now.
 
-
-
 ![Getting win_token from request](http://i.imgur.com/wpNTRMb.png)
 
-After that we need to validate that token in `win_token` field is issued with our `WindowsAuthenticationService`. (You can find full source code repo in end of this post)
+
+After that we need to validate that token in `win_token` field is issued with our `WindowsAuthenticationService`. 
 
 ![Valdiation Token](http://i.imgur.com/VcTNGU4.png)
 
+
+Now we have validated(trusted) token, now we should get `NameIdentifier` claim aka 'sub'. It includes Unique Identifier of user in Windows ( Active Directory ). It will be our `ProviderId` in `IdentityServer`.
+
+![Getting NameIdentifier token](http://i.imgur.com/mgVeOoT.png)
+
+
+Now we have everything to authenticate user in IdentityServer Side and return result to client.
+
+![User Authentication](http://i.imgur.com/AVO9rLM.png)
+
+
+You can find whole source code used in this post here.
+It is working sample about what I was talking :)
 
 
 
