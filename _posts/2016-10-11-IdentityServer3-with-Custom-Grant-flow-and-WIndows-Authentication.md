@@ -7,7 +7,7 @@ title: IdentityServer3 with Custom Grant flow and Windows Authentication
 
 1. Create and configure `IdentityServer3`
 2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
-3. Create and configure `WindowsAuthenticationServic`e with enabled WindowsAuthentication to convert windows identity to `jwt`
+3. Create and configure `WindowsAuthenticationService` with enabled WindowsAuthentication to convert windows identity to `jwt` token
 4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
 
 #### What we will archive?
@@ -32,6 +32,10 @@ After this we need to install IdentityServer3 with this command:
 Afther that we need our `Startup.cs` to configure our web app and `IdentityServer3`.
 Right Click On Project > Add > OWIN Startup Class.
 
+Don't forget to Enable SSL fom Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
+
+### 2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
+
 I will not go deeper for configuring IdentityServer3 basics. Read more about basics of configuring IdentityServer3 in
 [official documentation](https://identityserver.github.io/Documentation/docsv2/configuration/overview.html)
 
@@ -45,13 +49,44 @@ Also In my case all my users should come from windows authentication for that yo
 
 ![Disable local login](http://i.imgur.com/mSirFpM.png)
 
+### 3. Create and configure `WindowsAuthenticationService` with enabled WindowsAuthentication to convert windows identity to `jwt` token
+
+Again Create a new empty asp.net web project, with `Startup.cs` and `Owin.Host.SystemWeb` nuget installed on it.
+
+Then we need `WindowsAuthentication` Nuget for converting `win_identity` into `jwt token` to install this run this command:
+
+`Install-Package IdentityServer.WindowsAuthentication`
+
+Now we need to configure our application to use Windows Autehntication. 
+For IIS Express ( F4 Properties Menu )
+
+![IIS Express](http://i.imgur.com/FjcfTOr.png)
+
+For IIS ( uncomment this line in web.config )
+
+![IIS](http://i.imgur.com/L2QV1CJ.png)
+
+Now we should configure `IdentityServer.WindowsAuthentication`. Here it is:
+
+![WinAuth configuration](http://i.imgur.com/aB7HJm6.png)
+
+Note to higlighthing lines. You should Load same Certificate as in IdentityServer, and you should enable OAuth Endpoint to 
+be able to get converted token by Requesting custom grant from `WinAuthService`.
+
+Don't forget to Enable SSL fom Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
+
+### 4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
+
 Now the most important part is to teach our IdentityServer to understand "windows" grant type (:
 
 For that we need to implement `ICustomGrantValidator` interface. Read more about Custom Grant Validators
 in [official documentation](https://identityserver.github.io/Documentation/docsv2/advanced/customGrantTypes.html)
 
 We should define what we need when we are going to grant access with "windows" grant type. We need our `win_token` that
-our `WindowsAuthenticationService` issued.
+our `WindowsAuthenticationService` issued. This service can be used with `IdentityServer3` for WS-Federation, but we aren't going to
+use it now.
+
+
 
 ![Getting win_token from request](http://i.imgur.com/wpNTRMb.png)
 
