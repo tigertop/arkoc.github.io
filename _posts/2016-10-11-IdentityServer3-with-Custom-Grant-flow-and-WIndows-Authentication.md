@@ -36,11 +36,11 @@ I will not go deeper for configuring IdentityServer3 basics. You can read about 
 Also you can get full source code from this sample ( i will post github link in end of the post )
 
 We should define our Client with `Flows.Custom` and `AllowedCustomGrantTypes: "windows"`. 
-![Custom Flow and AllowedCustomGrantTypes "windows"](http://i.imgur.com/tORQ8Nh.png)
+![Custom Flow and AllowedCustomGrantTypes "windows"](http://i.imgur.com/EbpLjxy.png)
 
 
 Also In my case all my users should come from windows authentication for that you should disable local login.
-![Disable local login](http://i.imgur.com/SDKTz6V.png)
+![Disable local login](http://i.imgur.com/mSirFpM.png)
 
 Af
 
