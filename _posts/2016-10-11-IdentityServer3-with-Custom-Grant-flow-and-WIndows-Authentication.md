@@ -6,7 +6,7 @@ title: IdentityServer3 with Custom Grant flow and Windows Authentication
 #### What we are going to do?
 
 1. Create and configure `IdentityServer3`
-2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrant: "windows"`
+2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
 3. Create and configure `WindowsAuthenticationServic`e with enabled WindowsAuthentication to convert windows identity to `jwt`
 4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
 
@@ -35,71 +35,14 @@ Right Click On Project > Add > OWIN Startup Class.
 I will not go deeper for configuring IdentityServer3 basics. You can read about that in documentation pagexx
 Also you can get full source code from this sample ( i will post github link in end of the post )
 
-Create `Config` static class in root of project to keep there our In-Memory Scopes and Clients`.
-
-```c#
-public static class Config
-{
-  public static Client[] Clients = new Client[]
-  {
-      new Client
-      {
-          ClientId = "client",
-          ClientName = "test client",
-          Enabled = true,
-          Flow = Flows.Custom,
-          AllowedCustomGrantTypes = new List<string>
-          {
-              "windows"
-          },
-          AllowedScopes = new List<string>
-          {
-              "openid", "profile", "roles", "api"
-          },
-          ClientSecrets = new List<Secret>
-          {
-              new Secret("secret".Sha256()),
-          },
-          RequireConsent = false,
-          AccessTokenType = AccessTokenType.Jwt
-      }
-  };
-
-  public static Scope[] Scopes = new Scope[]
-  {
-      StandardScopes.OpenId,
-      StandardScopes.ProfileAlwaysInclude,
-      StandardScopes.RolesAlwaysInclude,
-      new Scope
-      {
-          Name = "api",
-          DisplayName = "resource api",
-          Type = ScopeType.Resource,
-          Claims = new List<ScopeClaim>()
-          {
-              new ScopeClaim(IdentityServer3.Core.Constants.ClaimTypes.Name)
-          }
-      }
-  };
-}
-```
-Here we define new Client with 
-Create `IdentityServerServiceFactoryExtensions` class in `Helpers` folder. To keep clean configuration of `IdentityServer`.
-Add this extension method.
-
-```c#
-public static IdentityServerServiceFactory Configure(this IdentityServerServiceFactory factory)
-{
-    factory.CustomGrantValidators.Add(new Registration<ICustomGrantValidator>(typeof(WindowsGrantValidator)));
-
-    factory.UseInMemoryClients(Config.Clients);
-    factory.UseInMemoryScopes(Config.Scopes);
-
-    return factory;
-}
-```
+We should define our Client with `Flows.Custom` and `AllowedCustomGrantTypes: "windows"`. 
+![Custom Flow and AllowedCustomGrantTypes "windows"](http://i.imgur.com/tORQ8Nh.png)
 
 
+Also In my case all my users should come from windows authentication for that you should disable local login.
+![Disable local login](http://i.imgur.com/SDKTz6V.png)
+
+Af
 
 
 
