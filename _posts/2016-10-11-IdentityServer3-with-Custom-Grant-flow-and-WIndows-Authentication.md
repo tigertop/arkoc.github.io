@@ -17,6 +17,8 @@ that is trusted by our `IdentityServer`. Then `Client` will call to `/token` end
 with newly getted `jwt token` and get authenticated in IdentityServer. After that user will have access to `id_token access_token`, scopes
 and whatever `IdentityServer3` supports.
 
+<!--more-->
+
 ### 1. Create and configure `IdentityServer3`
 
 Create a new empty asp.net web project. We are going to use OWIN-based web app hosted in IIS. 
