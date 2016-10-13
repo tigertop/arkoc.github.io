@@ -117,9 +117,16 @@ Now we have everything to authenticate user in IdentityServer Side and return re
 ![User Authentication](http://i.imgur.com/AVO9rLM.png)
 
 
-You can find whole source code used in this post here.
-It is working sample about what I was talking :)
+Whole working sample can be found here: [IdSrv3.WindowsCustomGrant.Sample]().
 
 
+#### Links
 
+[Documentation](https://identityserver.github.io/Documentation/)
+
+[IdentityServer3](https://github.com/IdentityServer/IdentityServer3)
+
+[WindowsAuthenticationService](https://github.com/IdentityServer/WindowsAuthentication)
+
+[IdentityManager](https://github.com/IdentityManager/IdentityManager)
 
