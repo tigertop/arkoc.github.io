@@ -8,7 +8,8 @@ title: IdentityServer3 with custom grant flow and windows authentication
 1. Host and configure `IdentityServer3`
 2. Create a client for `IdentityServer3` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
 3. Host and configure `WindowsAuthenticationService`
-4. Create custom grant validator in `IdentityServere3` for `windows` grant type
+4. Create custom grant validator in `IdentityServer3` for `windows` grant type
+5. Create console client and get token from `IdentityServer3` by current `windows principal`.
 
 #### What we will archive?
 
@@ -105,6 +106,22 @@ Everything ready to authenticate the user in `IdentityServer3` and issue token t
 
 ![User Authentication](http://i.imgur.com/AVO9rLM.png)
 
+
+### 5. Create console client and get token from `IdentityServer3` by current `windows principal`.
+
+Everything setup, now we should test our services. Create new `ConsoleApplication` and install `Thinktecture.IdentityModel.Client` package.
+
+`Install-Package Thinktecture.IdentityModel.Client`
+
+Now We need to connect to `WindowsAuthenticationService` with `UseDefaultCrediantals` (this will include our windows principal in request) and get converted `jwt token` back.
+
+![Getting win token from request](http://i.imgur.com/PFsSQRB.png)
+
+After that we should get access token from result (`resultToken.AccessToken`) and send it via `win_token` param by requesting custom `windows` grant from `IdnetityServer3`.
+
+![Requesting custom windows grant](http://i.imgur.com/P6p37Ff.png)
+
+We Done!
 
 A whole working sample can be found here: [IdSrv3.WindowsCustomGrant.Sample]().
 
