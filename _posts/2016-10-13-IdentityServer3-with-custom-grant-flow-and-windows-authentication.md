@@ -11,7 +11,7 @@ title: IdentityServer3 with custom grant flow and windows authentication
 4. Create custom grant validator in `IdentityServer3` for `windows` grant type
 5. Create console client and get token from `IdentityServer3` by current `windows principal`.
 
-#### How this all will comunicate ?
+#### How this all communicate?
 
 ![Communication](http://i.imgur.com/X86m1fK.png)
 
