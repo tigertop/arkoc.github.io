@@ -1,24 +1,25 @@
 ---
 layout: post
-title: IdentityServer3 with Custom Grant flow and Windows Authentication
+title: IdentityServer3 with custom grant flow and windows authentication
 ---
 
 #### What we are going to do?
 
 1. Host and configure `IdentityServer3`
-2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
-3. Create and configure `WindowsAuthenticationService` with enabled WindowsAuthentication to convert windows identity to `jwt` token
-4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
+2. Create client for `IdentityServer3` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
+3. Host and configure `WindowsAuthenticationService`
+4. Create custom grant validator in `IdentityServere3` for `windows` grant type
 
 #### What we will archive?
 
-Our client (in my case desktop application) will call `WindowsAuthenticationService` for converting `windows identity` to `jwt token`
-that is trusted by our `IdentityServer`. Then `Client` will call to `/token` endpoint (with custom grant: windows )
-with newly getted `jwt token` and get authenticated in IdentityServer. After that user will have access to `id_token access_token`, scopes and whatever `IdentityServer3` supports.
+Our client (in my case desktop application) will call `WindowsAuthenticationService` for converting current `windows principal` to `jwt token` trusted by `IdentityServer3`.
+Then `Client` will call to `/token` endpoint (with custom grant: windows ) of `IdentityServer3` with providing `jwt token` getted from `WindowsAuthenticationService`. `IdentityServer3` will issue new token with requested scopes, custom claims and so on.
+
+This will allow us authenticate users in `IdentityServer3` with windows authentication. Also we can add roles, claims to this users throught [IdentityManager](https://github.com/IdentityManager/IdentityManager).
 
 <!--more-->
 
-### 1. Create and configure `IdentityServer3`
+### 1. Host and configure `IdentityServer3`
 
 Create a new empty asp.net web project. We are going to use OWIN-based web app hosted in IIS. 
 For this we need to install `Owin.Host.SystemWeb` package.
@@ -40,7 +41,7 @@ Right Click On Project > Add > OWIN Startup Class.
 Don't forget to Enable SSL in Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
 
 
-### 2. Create client for `IdntSrv` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
+### 2. Create client for `IdentityServer3` with `Flows.Other` and `AllowedCustomGrantTypes: "windows"`
 
 I will not go deeper for basics configuration of IdentityServer3 . Read more about basics of configuring IdentityServer3 in
 [official documentation](https://identityserver.github.io/Documentation/docsv2/configuration/overview.html)
@@ -56,7 +57,7 @@ Also In my case all my users should come from windows authentication for that yo
 ![Disable local login](http://i.imgur.com/mSirFpM.png)
 
 
-### 3. Create and configure `WindowsAuthenticationService` with enabled WindowsAuthentication to convert windows identity to `jwt token`
+### 3. Host and configure `WindowsAuthenticationService`
 
 Again Create a new empty asp.net web project, with `Startup.cs` and `Owin.Host.SystemWeb` nuget installed on it.
 
@@ -87,7 +88,7 @@ be able to get converted token by Requesting custom grant from `WinAuthService`.
 Don't forget to Enable SSL fom Properties Menu (F4) and configure ProjectURL in Project Properties Web Tab.
 
 
-### 4. Create custom grant validator to validate tokens converted from `WindowsAuthenticationService`
+### 4. Create custom grant validator in `IdentityServere3` for `windows` grant type
 
 Now the most important part is to teach our IdentityServer to understand "windows" grant type (:
 
