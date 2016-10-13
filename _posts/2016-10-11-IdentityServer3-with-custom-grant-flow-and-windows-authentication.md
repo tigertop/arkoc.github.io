@@ -96,12 +96,12 @@ After that, we need to validate that `win_token` is issued from our `WindowsAuth
 ![Token Validation](http://i.imgur.com/VcTNGU4.png)
 
 
-Now we have validated (trusted) token, now we should get `NameIdentifier` claim aka 'sub'. It includes Unique Identifier of the user in Windows (active directory). It will be our `ProviderId` in `IdentityServer`.
+Now we have validated (trusted) token. Next step is to get unique identifier of user. It is stored in `NameIdentifier` claim. 
 
 ![Getting NameIdentifier token](http://i.imgur.com/mgVeOoT.png)
 
 
-Now we have everything to authenticate a user in IdentityServer Side and return a result to the client.
+Everything ready to authenticate the user in `IdentityServer3` and issue token to the client.
 
 ![User Authentication](http://i.imgur.com/AVO9rLM.png)
 
