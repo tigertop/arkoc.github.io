@@ -11,10 +11,14 @@ title: IdentityServer3 with custom grant flow and windows authentication
 4. Create custom grant validator in `IdentityServer3` for `windows` grant type
 5. Create console client and get token from `IdentityServer3` by current `windows principal`.
 
-#### What we will archive?
+#### How thiss all will comunicate ?
+
+![Communication](http://i.imgur.com/X86m1fK.png)
 
 Our client (in my case desktop application) will call `WindowsAuthenticationService` for converting current `windows principal` to `jwt token` trusted by `IdentityServer3`.
 Then `Client` will call to `/token` endpoint (with the custom grant: windows ) of `IdentityServer3` with providing `jwt token` got from `WindowsAuthenticationService`. `IdentityServer3` will issue new token with requested scopes, custom claims and so on.
+
+#### What we will archive?
 
 This will allow us to authenticate users in `IdentityServer3` with windows authentication. Also, we can add roles, claims to these users through [IdentityManager](https://github.com/IdentityManager/IdentityManager).
 
