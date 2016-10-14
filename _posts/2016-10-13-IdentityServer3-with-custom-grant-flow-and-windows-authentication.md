@@ -126,7 +126,7 @@ After that, we should extract the access token from the result (`resultToken.Acc
 
 We are all Done!
 
-A complete working sample can be found here: [IdSrv3.WindowsCustomGrant.Sample]().
+A complete working sample can be found here: [IdSrv3.WindowsCustomGrant.Sample](https://github.com/arkoc/IdSrv3.WindowsCustomGrant.Sample).
 
 
 #### Links
