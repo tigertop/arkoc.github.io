@@ -13,7 +13,7 @@ title: IdentityServer3 with Custom grant flow and Windows authentication
 
 #### How does this all communicate?
 
-![Communication](http://i.imgur.com/X86m1fK.png)
+![Communication](images/idnsrv_winauth_1.png)
 
 The client (in our case a WPF-based desktop application) calls `WindowsAuthenticationService` for converting his/her current `windows principal` to `jwt token`, which is trusted by `IdentityServer3`.
 On the next step, the `Client` calls the IdentityServer's `/token` endpoint (using custom grant: windows ), including in the request the `jwt token` got from `WindowsAuthenticationService`. `IdentityServer3` will then issue a new token with requested scopes, custom claims and etc.
