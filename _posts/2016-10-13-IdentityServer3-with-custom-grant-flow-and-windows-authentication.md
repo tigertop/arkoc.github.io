@@ -52,7 +52,7 @@ We are going to implement a Client with `Flows.Custom` and `AllowedCustomGrantTy
 
 Because, in our case, all our users should come from windows authentication you need to disable the local login as depicted below.
 
-![Disable local login](http://i.imgur.com/mSirFpM.png)
+![Disable local login](images/idnsrv_winauth_2.png)
 
 
 ### 3. Setup and configuration of the `WindowsAuthenticationService`
@@ -67,16 +67,16 @@ Next step is to enable windows authentication for the project.
 
 For IIS Express (F4 properties menu)
 
-![IIS Express](http://i.imgur.com/FjcfTOr.png)
+![IIS Express](images/idnsrv_winauth_3.png)
 
 
 For IIS (uncomment this line in web.config)
 
-![IIS](http://i.imgur.com/L2QV1CJ.png)
+![IIS](images/idnsrv_winauth_4.png)
 
 Next step is to configure the `IdentityServer.WindowsAuthentication`. Here is an example of the configuration:
 
-![WinAuth configuration](http://i.imgur.com/aB7HJm6.png)
+![WinAuth configuration](images/idnsrv_winauth_5.png)
 
 Please note the highlighted lines in the screenshot. You should load the same certificate that is used for the IdentityServer, and you should set `EnableOAuth2Endpoint` property to `true`, which allows us to get `jwt tokens` by requesting a custom grant from `WindowsAuthenticationService`'s `/token` endpoint.
 
@@ -92,22 +92,22 @@ from the [official documentation](https://identityserver.github.io/Documentation
 
 We must define what information must be included in the custom grant request when we are granting access to `windows` grant type. Primarily we need the `jwt token` which is issued by `WindowsAuthenticationService`. We will store this `jwt token` in the `win_token` property.
 
-![Getting win_token from request](http://i.imgur.com/wpNTRMb.png)
+![Getting win_token from request](images/idnsrv_winauth_6.png)
 
 
 After that, we need to validate that `win_token` is issued from our `WindowsAuthenticationService`. 
 
-![Token Validation](http://i.imgur.com/VcTNGU4.png)
+![Token Validation](images/idnsrv_winauth_7.png)
 
 
 Now when we have validated token next step is to get a unique identifier for our user. We'll store it in the `NameIdentifier` claim. 
 
-![Getting NameIdentifier token](http://i.imgur.com/mgVeOoT.png)
+![Getting NameIdentifier token](images/idnsrv_winauth_8.png)
 
 
 Now we are all setup for authenticating the user in `IdentityServer3` and issue token for the client.
 
-![User Authentication](http://i.imgur.com/AVO9rLM.png)
+![User Authentication](images/idnsrv_winauth_9.png)
 
 
 ### 5. Creating a console client and get a token from `IdentityServer3` by using the current `Windows principal`.
@@ -118,11 +118,11 @@ Now when the all the configuration is done let's write a simple console applicat
 
 Now we need to connect to the `WindowsAuthenticationService` using Windows authentication and current principal. To achieve these we need to set the `UseDefaultCrediantals` flag. This will include our current windows principal in the request. As the result, we will get a `jwt token` that represents our current Windows principal.
 
-![Getting win token from request](http://i.imgur.com/PFsSQRB.png)
+![Getting win token from request](images/idnsrv_winauth_10.png)
 
 After that, we should extract the access token from the result (`resultToken.AccessToken`) and place it in the `win_token` param when requesting a custom `windows` grant from `IdnetityServer3`.
 
-![Requesting custom windows grant](http://i.imgur.com/P6p37Ff.png)
+![Requesting custom windows grant](images/idnsrv_winauth_11.png)
 
 We are all Done!
 
