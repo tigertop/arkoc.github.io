@@ -23,6 +23,7 @@ On the next step, the `Client` calls the IdentityServer's `/token` endpoint (usi
 This configuration allows us to authenticate users in `IdentityServer3` with windows authentication. In addition, we can add roles, claims to these users by using the [IdentityManager](https://github.com/IdentityManager/IdentityManager).
 
 <!--more-->
+
 ### 1. Setup and configuration of the `IdentityServer3`.
 
 Create a new empty ASP.NET web project. We are going to use OWIN-based web app hosted in IIS.
