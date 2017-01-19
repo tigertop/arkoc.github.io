@@ -8,6 +8,8 @@ title: Using MSBuild for DLL configuration files transformations and output to r
 1. ProjectA (Class Library) with custom configuration file foo.config (with configuration transformations)
 2. ProjectB (WebProject, ConsoleApplication and so on) that references ProjectA and includes the ProjectA's transformed configuration file foo.config (in output folder of ProjectB)
 
+<!--more-->
+
 #### Let's start.
 
 Side Note: Transformations are nessaccary to have different settings for different build configurations. (e.g. Release, Debug, Staging)
