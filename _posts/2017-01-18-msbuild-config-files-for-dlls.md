@@ -20,7 +20,7 @@ Let's start by adding a configuration file to our Class Library project. Right C
 
 Unload the project by clicking "Unload Project" from project's context menu. Right click on unloaded project and click "Edit .csproj file".
 
-Add this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
+Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
 
 ```xml
   <ItemGroup>
