@@ -21,7 +21,7 @@ Unload the project by clicking "Unload Project" from project's context menu. Rig
 Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
 
 
-```xml
+`
   <ItemGroup>
     <None Include="foo.config">
     </None>
@@ -35,7 +35,7 @@ Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.
       <DependentUpon>foo.config</DependentUpon>
     </None>
   </ItemGroup>
- ```
+ `
  
  
 Now we need to `MSBuild` task to transform our `foo.config` based on configuration. Because of we need include our configuration file as `Content` and copy it to output directory (to referenced project) we need to transform our file before build starts.
@@ -43,12 +43,12 @@ Now we need to `MSBuild` task to transform our `foo.config` based on configurati
 Add following section below (`<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />`)
 
 
-```xml
+`
   <Target Name="BeforeBuild">
     <MakeDir Directories="config"/>
     <TransformXml Source="foo.config" Destination="config\foo.config" Transform="foo.$(Configuration).config" />
   </Target>
-```
+`
 
 
 Now last step. We need to make our transformed file to be included in output directory (also in directory where our dll is referenced)
@@ -56,14 +56,14 @@ Now last step. We need to make our transformed file to be included in output dir
 Add this section after (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
 
 
-```xml
+`
   <ItemGroup>
     <Content Include="config\foo.config">
       <Link>foo.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-```
+`
 
 
 Here we go. Our setup is config. Now our dll and configuration file will be copied to ouput directory whereever it is referenced.
