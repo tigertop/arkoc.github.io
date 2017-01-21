@@ -38,9 +38,9 @@ Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.
 ```
  
  
-Now we need to `MSBuild` task to transform our `foo.config` based on configuration. Because of we need include our configuration file as `Content` and copy it to output directory (to referenced project) we need to transform our file before build starts.
+Now we need to `MSBuild` task to transform our `foo.config` based on configuration. Because of we need include our configuration file as `Content` and copy it to output directory (also in referencing project) we need to transform our file before build starts.
 
-Add following section below (`<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />`)
+Add following section below this (`<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />`)
 
 
 ```xml
@@ -66,4 +66,4 @@ Add this section after (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.t
 ```
 
 
-Here we go. Our setup is config. Now our dll and configuration file will be copied to ouput directory whereever it is referenced.
+Here we go. Our setup is done. Now our dll and configuration file will be copied to ouput directory whereever it is referenced.
