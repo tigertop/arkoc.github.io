@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Using MSBuild for DLL configuration files transformations and output to referencing projects
+title: Using MSBuild for DLL configuration files, transformations and output to referencing projects.
 ---
 
 #### What we are going to archive?
 
 1. ProjectA (Class Library) with custom configuration file foo.config (with configuration transformations)
-2. ProjectB (WebProject, ConsoleApplication and so on) that references ProjectA and includes the ProjectA's transformed configuration file foo.config (in output folder of ProjectB)
+2. ProjectB (WebProject or ConsoleApplication, ...) that references ProjectA and includes the ProjectA's transformed configuration file foo.config (in output folder of ProjectB)
 
 <!--more-->
 
@@ -14,12 +14,12 @@ title: Using MSBuild for DLL configuration files transformations and output to r
 
 Side Note: Transformations are nessaccary to have different settings for different build configurations. (e.g. Release, Debug, Staging)
 
-Let's start by adding a configuration file to our Class Library project. Right Click on Project > Add > New Item > Application Configuration File. Name it foo.config.
+Let's start by adding a configuration file to our Class Library project. Right Click on Project > Add > New Item > Application Configuration File. Let's name it foo.config.
 
-Unload the project by clicking "Unload Project" from project's context menu. Right click on unloaded project and click "Edit .csproj file".
+Unload the project by clicking "Unload Project" from project's context menu. Then right click on unloaded project and click "Edit .csproj file".
 
-Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
-
+Add or Modify the below section just before (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
+This will link each configuration's config file to the root foo.config. As a result the files will be displayed as children to the root configuration file in the Solution explorer of Visual Studio, and will inherit settings from root configuration file.
 
 ```xml
 <ItemGroup>
@@ -38,7 +38,7 @@ Add/Modify this section before (`<Import Project="$(MSBuildToolsPath)\Microsoft.
 ```
  
  
-Now we need to `MSBuild` task to transform our `foo.config` based on configuration. Because of we need include our configuration file as `Content` and copy it to output directory (also in referencing project) we need to transform our file before build starts.
+Now we need to create a `MSBuild` task in-order to transform our `foo.config` based on selected configuration. As we need to set the root config. file's build action to `Content` and copy it to the output directory (also in referencing project) we need to transform our file before build starts.
 
 Add following section below this (`<UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />`)
 
@@ -50,11 +50,9 @@ Add following section below this (`<UsingTask TaskName="TransformXml" AssemblyFi
 </Target>
 ```
 
+Now last step. We need to make our transformed file to be included in the output directory (also in output directories of other projects  where our dll is referenced).
 
-Now last step. We need to make our transformed file to be included in output directory (also in directory where our dll is referenced)
-
-Add this section after (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
-
+Add this section just after (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />`)
 
 ```xml
 <ItemGroup>
@@ -65,5 +63,4 @@ Add this section after (`<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.t
 </ItemGroup>
 ```
 
-
-Here we go. Our setup is done. Now our dll and configuration file will be copied to ouput directory whereever it is referenced.
+We are all done. Now our dll and the transformed configuration file will be copied to ouput directory whereever the dll is referenced.
