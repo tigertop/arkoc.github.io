@@ -66,7 +66,7 @@ Let's remove that function and save assembly again.
 Then click on module then File -> Save Module.
 Don't forget to set MD Writer options like this:
 
-![md_writer](http://arkoc.github.io/images/re_part1_7.png)
+![md_writer](http://arkoc.github.io/images/re_part1_8.png)
 
 Ok, now we have runnable .exe with decompiled methods.
 
