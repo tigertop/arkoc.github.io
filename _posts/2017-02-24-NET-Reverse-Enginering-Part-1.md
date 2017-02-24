@@ -28,7 +28,7 @@ In this part:
 
 Here can be a huge text about trying multiple deobfuscators with no luck, let's just skip this step and let's try with our hands. (right hand is most productive)
 
-Let's load our assembly with (dnSpy)[https://github.com/0xd4d/dnSpy]. 
+Let's load our assembly with [dnSpy](https://github.com/0xd4d/dnSpy).
 Let's look through our module and classes and what we notice is that methods defined in the assembly aren't decompiled. 
 
 ![messed methods](http://arkoc.github.io/images/re_part1_1.png)
